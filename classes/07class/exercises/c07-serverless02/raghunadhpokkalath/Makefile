@@ -4,7 +4,7 @@ DB_NAME=DA_Serverless
 buildzip:
 	$(COMPOSE_RUN_SHELL) make _buildzip
 _buildzip:
-	mkdir terraform/lamda_zip;cd src;zip ../terraform/lamda_zip/remove_untagged_instances.zip remove_untagged_instances.py;
+	mkdir terraform/lamda_zip;cd src;zip ../terraform/lamda_zip/remove_untagged_instance.zip remove_untagged_instance.py;
 
 #.PHONY: ssmsetup
 #ssmsetup:
