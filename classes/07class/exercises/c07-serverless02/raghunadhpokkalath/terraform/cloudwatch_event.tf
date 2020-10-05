@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_event_rule" "this" {
-  name        = "Instance state was changed"
+  name        = "ec2instancestate"
   description = "Capture EC2 instance state"
 
   event_pattern = <<PATTERN

@@ -18,23 +18,17 @@ resource "aws_lambda_function" "remove_untagged_instance" {
 
 }
 
-resource "aws_cloudwatch_log_group" "report_count" {
+resource "aws_cloudwatch_log_group" "remove_untagged_instance" {
   name              = "/aws/lambda/${aws_lambda_function.remove_untagged_instance.function_name}"
   retention_in_days = 1
 }
 
-#resource "aws_lambda_event_source_mapping" "this" {
-# event_source_arn  = aws_dynamodb_table.da_serverless.stream_arn
-#enabled           = true
-#function_name     = aws_lambda_function.report_count_lamda.arn
-#starting_position = "LATEST"
-#}
 
 
 resource "aws_lambda_permission" "cloudwatchevent" {
-  statement_id  = "AllowAPIGatewayInvoke"
+  statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.da_create_customer.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.customer.execution_arn}/*/*"
+  function_name = aws_lambda_function.remove_untagged_instance.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.this.arn}/*/*"
 }
