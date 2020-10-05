@@ -11,7 +11,7 @@ resource "aws_sns_topic" "this" {
   provisioner "local-exec" {
     command = "sh scripts/snssubscribe.sh"
     environment = {
-      sns_arn   = self.arn
+      sns_arn  = self.arn
       email_id = var.sns_email
     }
 
